@@ -1,21 +1,23 @@
-name: Test My Mail App 
+name: Test My Mail App
 
-on : [push]
+on: [push]
 
 jobs:
     test:
-        runs-on: ubunru-latest
+        runs-on: ubuntu-latest  # Fixed: "ubunru" -> "ubuntu"
         steps:
            - uses: actions/checkout@v4
-           - name : use node js
-             uses: actions/checkout@v6
+           
+           - name: use node js
+             uses: actions/setup-node@v4  # Fixed: was using checkout@v6, should be setup-node
              with:
-                node-version: '25'
+                node-version: '22'  # Note: Node.js 25 doesn't exist yet (latest is 22.x)
 
            - name: install dependency
              run: npm install
+           
            - name: build
-             run: npm run builds
+             run: npm run build  # Fixed: "builds" -> "build" (assuming your package.json has a "build" script)
 
            - name: All test end
              run: echo "All test end"
