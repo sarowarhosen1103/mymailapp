@@ -4,20 +4,23 @@ on: [push]
 
 jobs:
     test:
-        runs-on: ubuntu-latest  # Fixed: "ubunru" -> "ubuntu"
+        runs-on: ubuntu-latest
         steps:
            - uses: actions/checkout@v4
            
            - name: use node js
-             uses: actions/setup-node@v4  # Fixed: was using checkout@v6, should be setup-node
+             uses: actions/setup-node@v4
              with:
-                node-version: '22'  # Note: Node.js 25 doesn't exist yet (latest is 22.x)
+                node-version: '22'
 
            - name: install dependency
              run: npm install
            
            - name: build
-             run: npm run build  # Fixed: "builds" -> "build" (assuming your package.json has a "build" script)
+             run: npm run build 
+             env: 
+                MONGODB_URI: ${{ secrets.MONGODB_URI }} 
+                JWT_SECRET: ${{secrets.JWT_SECRET}} 
 
            - name: All test end
              run: echo "All test end"
