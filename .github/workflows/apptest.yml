@@ -1,26 +1,33 @@
 name: Test My Mail App
 
-on: [push]
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
 
 jobs:
-    test:
-        runs-on: ubuntu-latest
-        steps:
-           - uses: actions/checkout@v4
-           
-           - name: use node js
-             uses: actions/setup-node@v4
-             with:
-                node-version: '22'
+  test:
+    runs-on: ubuntu-latest
 
-           - name: install dependency
-             run: npm install
-           
-           - name: build
-             run: npm run build 
-             env: 
-                MONGODB_URI: ${{ secrets.MONGODB_URI }} 
-                JWT_SECRET: ${{secrets.JWT_SECRET}} 
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-           - name: All test end
-             run: echo "All test end"
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci   # Better than npm install in CI
+
+      - name: Build Next.js App
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        run: npm run build
+
+      - name: All tests completed
+        run: echo "✅ Build finished successfully!"
