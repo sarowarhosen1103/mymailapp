@@ -1,0 +1,21 @@
+name: Test My Mail App 
+
+on : [push]
+
+jobs:
+    test:
+        runs-on: ubunru-latest
+        steps:
+           - uses: actions/checkout@v4
+           - name : use node js
+             uses: actions/checkout@v6
+             with:
+                node-version: '25'
+
+           - name: install dependency
+             run: npm install
+           - name: build
+             run: npm run builds
+
+           - name: All test end
+             run: echo "All test end"

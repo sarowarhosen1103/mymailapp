@@ -56,12 +56,12 @@ jobs:
         runs-on: ubuntu-latest
         needs: [job-4, job-5]
         steps:
-            - name: ACTION WORK JOBS 8  # Fixed name
+            - name: ACTION WORK JOBS 8  
               run: echo "Hello it's job 8"
               
     job-9: 
         runs-on: ubuntu-latest
         needs: [job-6, job-7, job-8]
         steps:
-            - name: ACTION WORK JOBS 9  # Fixed name (was 8)
+            - name: ACTION WORK JOBS 9  
               run: echo "Hello it's job 9"
